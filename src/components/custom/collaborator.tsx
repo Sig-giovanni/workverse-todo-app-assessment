@@ -12,8 +12,11 @@ const Collaborator: React.FC<{
   const usersArray = convertUsersObjectToArray(users);
   return (
     <div className="space-y-4">
-      {usersArray.map((user) => (
-        <div className="flex items-center justify-between bg-white border-2 border-gray-300 shadow-md rounded-md px-4 py-2">
+      {usersArray.map((user, index) => (
+        <div
+          key={index}
+          className="flex items-center justify-between bg-white border-2 border-gray-300 shadow-md rounded-md px-4 py-2"
+        >
           <div className="flex items-center">
             <p className="text-slate-600 font-medium">{user.name}</p>
           </div>
