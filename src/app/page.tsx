@@ -1,54 +1,31 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Pusher from "pusher-js";
+import axios from "axios";
+import { env } from "@/env";
 import { Separator } from "@/components/ui/separator";
 import List from "@/components/custom/list";
 import CompletedList from "@/components/custom/completed-list";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import LoginModal from "@/components/login-modal";
+import Collaborator from "@/components/custom/collaborator";
 
-const schema = z.object({
-  title: z.string().min(6),
-});
+import { defaultTasks } from "@/lib/data";
+import Todo from "@/components/todo";
 
 export default function Home() {
+  console.log(env);
+  const [user, setUser] = useState<User>({
+    name: "",
+    avatar: "",
+  });
+
   return (
-    <div className="p-6 lg:px-10 h-full">
-      <div>
-        <h1 className="text-2xl font-semibold mb-5 text-slate-700">
-          Assessments
-        </h1>
-      </div>
-      <div className="flex items-start gap-x-5 mt-10">
-        <div className="h-full w-[400px]">
-          <h1 className="font-medium text-slate-700 text-xl mb-5">
-            Todo 🗃️ <span className="font-normal">4</span>
-          </h1>
-          <div className="space-y-4">
-            <List />
-            <List />
-          </div>
-        </div>
-        <Separator orientation="vertical" className="h-[500px]" />
-        <div className="h-full w-[400px]">
-          <h1 className="font-medium text-slate-700 text-xl mb-5">
-            Completed ✅
-          </h1>
-          <div className="space-y-4">
-            <CompletedList />
-            <CompletedList />
-            <CompletedList />
-          </div>
-        </div>
-      </div>
+    <div>
+      {user.name === "" ? (
+        <LoginModal loginProps={{ handleLogin: setUser }} />
+      ) : (
+        <Todo todoProps={{ user }} />
+      )}
     </div>
   );
 }
