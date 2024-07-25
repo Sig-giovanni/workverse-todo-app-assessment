@@ -15,11 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const userSchema = z.object({
-  username: z
-    .string({
-      invalid_type_error: "Username must be greater than 6 characters!",
-    })
-    .min(6),
+  username: z.string().min(6, "Username must be greater than 6 characters!"),
 });
 
 type UserFormData = z.infer<typeof userSchema>;

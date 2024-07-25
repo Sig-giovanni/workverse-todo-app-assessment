@@ -24,9 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const taskSchema = z.object({
-  text: z
-    .string({ invalid_type_error: "Text must be greater than 6 characters!" })
-    .min(6),
+  text: z.string().min(6, "Text must be greater than 6 characters!"),
 });
 
 type TaskFormData = z.infer<typeof taskSchema>;
@@ -42,7 +40,7 @@ const Todo: React.FC<{
   const [onlineUsersCount, setOnlineUsersCount] = useState<number>(0);
   const [onlineUsers, setOnlineUsers] = useState<Users>({
     defaultUser: {
-      name: "defaultUser",
+      name: "Loading...",
       avatar: "https://github.com/shadcn.png",
     },
   });
@@ -158,18 +156,18 @@ const Todo: React.FC<{
 
   return (
     <>
-      <div className="bg-primary p-6 lg:px-8 flex justify-between">
+      <div className="bg-primary p-6 lg:px-8 flex justify-between w-full">
         <h1 className="text-white font-bold text-lg">WKVRSE</h1>
       </div>
-      <div className="p-6 lg:px-10 h-full">
+      <div className="p-2 lg:px-10 h-full">
         <div>
           <h1 className="text-2xl font-semibold mb-5 text-slate-700">
             Assessments
           </h1>
         </div>
-        <div className="flex justify-between items-start mt-10">
-          <div className="flex items-start gap-x-5">
-            <div className="h-full w-[400px]">
+        <div className="flex justify-between items-start mt-10 flex-wrap md:flex-nowrap">
+          <div className="flex items-start gap-x-5 flex-wrap md:flex-nowrap">
+            <div className="h-full w-[400px] px-4 mb-3">
               <h1 className="font-medium text-slate-700 text-xl mb-5">
                 Todo 🗃️ <span className="font-normal">{todoTask.length}</span>
               </h1>
@@ -209,8 +207,7 @@ const Todo: React.FC<{
                 </form>
               </Form>
             </div>
-            <Separator orientation="vertical" className="h-[500px]" />
-            <div className="h-full w-[400px]">
+            <div className="h-full w-[400px] px-4 mb-5">
               <h1 className="font-medium text-slate-700 text-xl mb-5">
                 Completed ✅{" "}
                 <span className="font-normal">{completedTask.length}</span>
@@ -229,7 +226,7 @@ const Todo: React.FC<{
             </div>
           </div>
           <div>
-            <div className="h-full w-[400px]">
+            <div className="h-full w-[400px] px-4">
               <h1 className="font-medium text-slate-700 text-xl mb-5">
                 Collaborators 🥷{" "}
                 <span className="font-normal">{onlineUsersCount}</span>
