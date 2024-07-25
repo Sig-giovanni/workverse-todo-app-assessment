@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import List from "@/components/custom/list";
 import CompletedList from "@/components/custom/completed-list";
 import Collaborator from "@/components/custom/collaborator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { defaultTasks } from "@/lib/data";
 import {
@@ -67,7 +68,7 @@ const Todo: React.FC<{
   useEffect(() => {
     if (!isMounted.current) return;
 
-    const channel = pusher.subscribe("presence-task");
+    const channel = pusher.subscribe("presence-cache-task");
 
     console.log(channel);
 
@@ -88,7 +89,7 @@ const Todo: React.FC<{
     });
 
     return () => {
-      pusher.unsubscribe("presence-task");
+      pusher.unsubscribe("presence-cache-task");
     };
   }, []);
 
@@ -155,9 +156,13 @@ const Todo: React.FC<{
   };
 
   return (
-    <>
+    <div className="w-full">
       <div className="bg-primary p-6 lg:px-8 flex justify-between w-full">
         <h1 className="text-white font-bold text-lg">WKVRSE</h1>
+        <Avatar className="w-10 h-10">
+          <AvatarImage src={user.avatar} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </div>
       <div className="p-2 lg:px-10 h-full">
         <div>
@@ -229,14 +234,13 @@ const Todo: React.FC<{
             <div className="h-full w-[400px] px-4">
               <h1 className="font-medium text-slate-700 text-xl mb-5">
                 Collaborators 🥷{" "}
-                <span className="font-normal">{onlineUsersCount}</span>
               </h1>
               <Collaborator collaboratorProps={{ users: onlineUsers }} />
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ export default function Home() {
   });
 
   return (
-    <div>
+    <div className="w-full">
       {user.name === "" ? (
         <LoginModal loginProps={{ handleLogin: setUser }} />
       ) : (
